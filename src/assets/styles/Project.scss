@@ -1,0 +1,123 @@
+/* src/assets/styles/Project.scss */
+
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5% 10%;
+    text-align: left;
+  
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 50px;
+        
+        .project {
+            text-align: left;
+            display: flex; 
+            flex-direction: column; /* Đảm bảo cả khối project dàn đều */
+            
+            h2:hover {
+                text-decoration: underline;
+                transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+            }
+
+            /* --- PHẦN WRAPPER VÀ TAG --- */
+            .project-thumbnail-wrapper {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 16 / 9; /* ĐÂY LÀ CHÌA KHÓA: Ép tất cả khung ảnh cao bằng nhau */
+                background-color: #1e1e1e; /* Thêm màu nền tối mờ lót dưới */
+                overflow: hidden; 
+                border-radius: 8px; /* Bo góc mượt mà hơn */
+                margin-bottom: 15px;
+                
+                a {
+                    display: block; 
+                    width: 100%;
+                    height: 100%; /* Ép thẻ a cao bằng wrapper */
+                }
+
+                img.zoom {
+                    display: block;
+                    width: 100%;
+                    height: 100%; /* Ép ảnh cao bằng wrapper */
+                    object-fit: cover; /* Phủ kín khung, tự động cắt viền thừa mà không làm méo ảnh */
+                    object-position: top; /* Tập trung hiển thị phần trên của web */
+                    transition: transform 0.3s ease-in-out;
+                    margin: 0 auto;
+                }
+
+                /* --- CSS XỬ LÝ 2 ẢNH MOBILE CẠNH NHAU --- */
+                &.mobile-layout {
+                    a {
+                        display: flex; 
+                        gap: 15px; 
+                        justify-content: center;
+                        align-items: center;
+                        padding: 10px; /* Bo lề một chút để 2 cái đt không sát viền quá */
+                    }
+
+                    img.zoom {
+                        width: calc(50% - 7.5px); 
+                        height: 100%;
+                        object-fit: contain; /* Thay vì cover, mobile mình dùng contain để show trọn màn hình app */
+                        border-radius: 6px;
+                    }
+                }
+
+                /* Hiệu ứng zoom khi di chuột vào khối ảnh */
+                &:hover img.zoom {
+                    transform: scale(1.05);
+                }
+
+                /* Tùy chỉnh Tag trạng thái của MUI Chip */
+                .project-status-tag {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    z-index: 10;
+                    font-weight: bold;
+                    border-radius: 20px;
+                    font-size: 0.75rem;
+                    padding: 2px 5px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+                    
+                    &.in-progress {
+                        background-color: #ffc107 !important;
+                        color: #000 !important; 
+                    }
+
+                    &.done {
+                        background-color: #28a745 !important;
+                        color: #fff !important;
+                    }
+                }
+            }
+        }
+    }
+}
+  
+/* Reponsive cho điện thoại */
+@media screen and (max-width: 700px) {
+    .projects-container {
+        display: block;
+        padding-left: 5%;
+        padding-right: 5%;
+
+        .projects-grid {
+            display: block;
+            
+            .project {
+                padding-bottom: 10%;
+
+                .project-thumbnail-wrapper.mobile-layout a {
+                    gap: 10px; 
+                    
+                    img.zoom {
+                        width: calc(50% - 5px);
+                    }
+                }
+            }
+        }
+    }
+}
